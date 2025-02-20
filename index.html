@@ -16,17 +16,19 @@
             touch-action: none;
         }
         #navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: black;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            font-size: 20px;
-            z-index: 1000;
-        }
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px 0 0 10px;
+    writing-mode: vertical-rl;
+    text-align: center;
+    font-size: 20px;
+    color: white;
+}
+
         #joystickContainer {
             position: absolute;
             bottom: 20px;
