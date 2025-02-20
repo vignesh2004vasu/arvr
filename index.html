@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>AR Shooting Game</title>
+    <title>727822TUCS252 Ballon Shooting Game</title>
     
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/aframe-extras@latest/dist/aframe-extras.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/jeromeetienne/ar.js@1.7.2/aframe/build/aframe-ar.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.2/aframe/build/aframe-ar.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/nipplejs@0.9.0/dist/nipplejs.min.js"></script>
-
+    
     <style>
         body {
             margin: 0;
@@ -43,19 +42,7 @@
 </head>
 <body>
     <a-scene embedded arjs>
-        <a-assets>
-            <a-asset-item id="gunModel" src="https://cdn.glitch.global/348d72a9-c84e-46a2-9a35-23f81b6e0516/handgun.glb"></a-asset-item>
-        </a-assets>
-
-        <a-camera id="camera" position="0 1.6 0" rotation="0 0 0">
-            <a-entity 
-                id="gun" 
-                gltf-model="#gunModel"
-                position="0 -0.2 -0.5" 
-                scale="0.5 0.5 0.5"
-                rotation="0 180 0">
-            </a-entity>
-        </a-camera>
+        <a-camera id="camera" position="0 1.6 0" rotation="0 0 0"></a-camera>
     </a-scene>
 
     <div id="joystickContainer"></div>
@@ -79,19 +66,19 @@
             }
         });
 
-        function spawnTarget() {
-            let target = document.createElement("a-box");
+        function spawnBalloon() {
+            let balloon = document.createElement("a-sphere");
             let x = Math.random() * 4 - 2;
             let y = Math.random() * 2 + 1;
             let z = Math.random() * -5 - 3;
-            target.setAttribute("position", { x, y, z });
-            target.setAttribute("scale", "0.5 0.5 0.5");
-            target.setAttribute("class", "target");
-            target.setAttribute("color", "red");
-            document.querySelector("a-scene").appendChild(target);
+            balloon.setAttribute("position", { x, y, z });
+            balloon.setAttribute("radius", "0.3");
+            balloon.setAttribute("color", "blue");
+            balloon.setAttribute("class", "balloon");
+            document.querySelector("a-scene").appendChild(balloon);
         }
 
-        setInterval(spawnTarget, 3000);
+        setInterval(spawnBalloon, 3000);
 
         document.getElementById("shootButton").addEventListener("click", function () {
             let bullet = document.createElement("a-sphere");
@@ -117,13 +104,13 @@
                     z: bulletPos.z + velocity.z 
                 });
 
-                document.querySelectorAll(".target").forEach(target => {
-                    let targetPos = target.getAttribute("position");
-                    let dx = Math.abs(targetPos.x - bulletPos.x);
-                    let dy = Math.abs(targetPos.y - bulletPos.y);
-                    let dz = Math.abs(targetPos.z - bulletPos.z);
+                document.querySelectorAll(".balloon").forEach(balloon => {
+                    let balloonPos = balloon.getAttribute("position");
+                    let dx = Math.abs(balloonPos.x - bulletPos.x);
+                    let dy = Math.abs(balloonPos.y - bulletPos.y);
+                    let dz = Math.abs(balloonPos.z - bulletPos.z);
                     if (dx < 0.3 && dy < 0.3 && dz < 0.3) {
-                        target.remove();
+                        balloon.remove();
                         bullet.remove();
                         clearInterval(bulletInterval);
                     }
