@@ -16,19 +16,28 @@
             touch-action: none;
         }
         #navbar {
-    position: fixed;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.7);
-    padding: 20px;
-    border-radius: 10px 0 0 10px;
-    writing-mode: vertical-rl;
-    text-align: center;
-    font-size: 20px;
-    color: white;
-}
-
+            position: fixed;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px 0 0 10px;
+            writing-mode: vertical-rl;
+            text-align: center;
+            font-size: 20px;
+            color: white;
+        }
+        #scoreDisplay {
+            position: fixed; 
+            top: 20px; 
+            left: 20px; 
+            background: rgba(0, 0, 0, 0.7); 
+            color: white; 
+            padding: 10px; 
+            border-radius: 5px; 
+            font-size: 24px;
+        }
         #joystickContainer {
             position: absolute;
             bottom: 20px;
@@ -55,7 +64,9 @@
     </style>
 </head>
 <body>
-     <div id="navbar">727822TUCS252 Ballon Shooting Game</div>
+    <div id="navbar">727822TUCS252 Ballon Shooting Game</div>
+    <div id="scoreDisplay">Score: <span id="scoreValue">0</span></div>
+    
     <a-scene embedded arjs>
         <a-camera id="camera" position="0 1.6 0" rotation="0 0 0"></a-camera>
     </a-scene>
@@ -65,6 +76,7 @@
 
     <script>
         let camera = document.getElementById("camera");
+        let score = 0; // Initialize score
 
         var joystick = nipplejs.create({
             zone: document.getElementById('joystickContainer'),
@@ -128,6 +140,10 @@
                         balloon.remove();
                         bullet.remove();
                         clearInterval(bulletInterval);
+                        
+                        // Increment score and update display
+                        score++;
+                        document.getElementById("scoreValue").textContent = score;
                     }
                 });
 
